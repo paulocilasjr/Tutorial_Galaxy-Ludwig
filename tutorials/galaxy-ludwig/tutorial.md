@@ -33,7 +33,7 @@ Using the MNIST image dataset of handwritten digits as input, we will build an i
 
 To accomplish this, three steps are needed: (i) upload Ludwig files and image files to Galaxy (ii) setting up and running the Ludwig experiment function on Galaxy, and (iii) evaluate the image classification model. As a bonus step, we'll also explore (iv) improving the model's classificationperformance (Figure 1).
 
-![alt text] (../../images/model_schema.png "create and run image classifier model")
+![schema of the whole process of training model and test.](../../images/model_schema.png "create and run image classifier model")
 Figure 1 - Overview of the steps process to obtain the handwritten classification model and testing it.
 
 <!-- You may want to cite some publications; this can be done by adding citations to the
@@ -67,28 +67,28 @@ tutorial.-->
 > The digist have been size-normalized and centered in a fixed-size image.
 {:  .comment}
 
-# 1 FILES FORMAT
+# FILES FORMAT
 Before starting our hands-on, here is a brief explanation of the three files generated for the Ludwig Experiment tool.
 
-## 1.1 Image_Files.zip 
+## Image_Files.zip 
 
 Since our model will learn directly from the PNG files containing the handwritten numbers, we need to upload these files as well. The images are stored in two main folders: one for training and one for testing. Another folder, named after the figure label, is used to store the figures (Figure 2).
 
 Notice that we are going to work with compacted file (.zip), Galaxy-Ludwig knows how to decompress the files and have them ready.
 
-![alt text] (../../images/images_file.png "folder tree")
-Figure 2 - File tree containing the images used to training and testing the model
+![folder tree related to the hand-written digits picture](../../images/images_file.png "folder tree")
+Figure 2 - File tree containing the images files used to training and testing the model
 
-## 1.2 MNIST_dataset.csv
+## MNIST_dataset.csv
 
 The MNIST dataset consists of images and their corresponding labels. For the purpose of this tutorial, mnist_dataset.csv file is created and contains three columns: image_path, label, and, split.
 
 Briefly, the image_path column provides the file paths to the images that will be fed into the deep learning algorithm. The label column contains the correct classifications, ranging from 0 to 9, for the handwritten digits in the images. The split column indicates whether the data should be used for training (0) or testing (2) the model.
 
-![alt text] (../../images/dataset_format.png "dataset.csv file snapshot")
+![Dataset.csv file format snapshot](../../images/dataset_format.png "dataset.csv file snapshot")
 Figure 3 - Dataset.csv file format snapshot. features in order: file_path, label, split.
 
-## 1.3 Config.yaml
+## Config.yaml
 
 
 The config.yaml file is crucial as it defines the entire structure of your machine learning experiment. This configuration file tells Ludwig how to process your data, what model to use, how to train it, and what outputs to generate.
@@ -98,14 +98,14 @@ i) The model takes images as input and uses a stacked convolutional neural netwo
 ii) It consists of two convolutional layers followed by a fully connected layer, with dropout applied to both the second convolutional layer and the fully connected layer to reduce overfitting.
 iii) The model is trained to classify images into categories (e.g., recognizing digits), and it will train for 20 epochs.
 
-![alt text] (../../images/config.png "config file snapshot")
+![Config.yaml file snapshot](../../images/config.png "config file snapshot")
 Figure 4 - Config.yaml file snapshot.
 
-# 2 GALAXY-LUDWIG 
+# GALAXY-LUDWIG 
 
 Ludwig simplifies the complexities of machine learning by automating essential steps such as data preprocessing, model architecture selection, hyperparameter tuning, and device management. This streamlined approach is particularly beneficial for Galaxy users who are more interested in addressing their scientific questions than in navigating the intricacies of machine learning workflows.
 
-## 2.1 Prepare environment and get the data 
+## Prepare environment and get the data 
 
 > <hands-on-title> Environment and Data Upload </hands-on-title>
 >
@@ -135,7 +135,7 @@ Ludwig simplifies the complexities of machine learning by automating essential s
 >
 {: .hands_on}
 
-## 2.2 Ludwig Experiment
+## Ludwig Experiment
 
 > <hands-on-title> Task description </hands-on-title>
 >

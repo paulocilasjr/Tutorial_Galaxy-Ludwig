@@ -15,7 +15,7 @@ MAINTAINER Galaxy Training Material
 ENV GALAXY_CONFIG_BRAND "GTN: Title of the topic"
 
 # copy the tutorials directory for your topic
-ADD topics/Imaging/tutorials/ /tutorials/
+ADD topics/machine-learning/tutorials/ /tutorials/
 
 # install everything for tutorials
 ADD bin/docker-install-tutorials.sh /setup-tutorials.sh

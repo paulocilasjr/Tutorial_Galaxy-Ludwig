@@ -90,7 +90,6 @@ Figure 3 - Dataset.csv file format snapshot. features in order: file_path, label
 
 ## Config.yaml
 
-
 The config.yaml file is crucial as it defines the entire structure of your machine learning experiment. This configuration file tells Ludwig how to process your data, what model to use, how to train it, and what outputs to generate.
 
 The rational on how this file was construct for this dataset is the following:
@@ -193,7 +192,7 @@ Based on the analysis presented, we can conclude that (i) the model demonstrates
 
 In the context of a confusion matrix, entropy measures the uncertainty or disorder in the model's predictions (Figure 8). A confusion matrix with low entropy would have high values concentrated along the diagonal (indicating correct predictions) and low values elsewhere, suggesting that the model is confident and accurate in its classifications. Conversely, a high entropy confusion matrix would have more evenly distributed values, indicating more frequent misclassifications and greater uncertainty in the model's predictions. In simple terms, entropy helps quantify how mixed or "confused" the model is when making decisions, with higher entropy reflecting more confusion.
 
-**View** {% icon galaxy-eye} The confusion matrix plot:
+The confusion matrix plot:
 [!Confusion matrix entropy from image classifier results](../../images/galaxy-ludwig/confusion_matrix_entropy.png)
 Figure 8 – Confusion matrix entropy of the model trained. The figure visualizes how the model's performance varies across different digits based on the distribution of prediction probabilities.
 

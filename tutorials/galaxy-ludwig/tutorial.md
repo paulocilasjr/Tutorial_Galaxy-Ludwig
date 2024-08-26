@@ -31,7 +31,7 @@ tags:
 
 Using the MNIST image dataset of handwritten digits as input, we will build an image recognition model with the Galaxy-Ludwig tool. The goal is to classify the digit handwritten in each image.
 
-To accomplish this, three steps are needed: (i) upload Ludwig files and image files to Galaxy (ii) setting up and running the Ludwig experiment function on Galaxy, and (iii) evaluate the image classification model. As a bonus step, we'll also explore (iv) improving the model's classificationperformance (Figure 1).
+To accomplish this, three steps are needed: (i) upload Ludwig files and image files to Galaxy (ii) setting up and running the Ludwig experiment function on Galaxy, and (iii) evaluate the image classification model. As a bonus step, we'll also explore (iv) improving the model's classification performance (Figure 1).
 
 ![schema of the whole process of training model and test.](../../images/model_schema.png "create and run image classifier model")
 Figure 1 - Overview of the steps process to obtain the handwritten classification model and testing it.
@@ -74,14 +74,14 @@ Before starting our hands-on, here is a brief explanation of the three files gen
 
 Since our model will learn directly from the PNG files containing the handwritten numbers, we need to upload these files as well. The images are stored in two main folders: one for training and one for testing. Another folder, named after the figure label, is used to store the figures (Figure 2).
 
-Notice that we are going to work with compacted file (.zip), Galaxy-Ludwig knows how to decompress the files and have them ready.
+Notice that we are going to work with compressed file (.zip), Galaxy-Ludwig knows how to decompress the files and have them ready.
 
 ![folder tree related to the hand-written digits picture](../../images/images_file.png "folder tree")
 Figure 2 - File tree containing the images files used to training and testing the model
 
 ## MNIST_dataset.csv
 
-The MNIST dataset consists of images and their corresponding labels. For the purpose of this tutorial, mnist_dataset.csv file is created and contains three columns: image_path, label, and, split.
+The MNIST dataset consists of images and their corresponding labels. For the purpose of this tutorial, mnist_dataset.csv file is created and contains three columns: image_path, label and, split.
 
 Briefly, the image_path column provides the file paths to the images that will be fed into the deep learning algorithm. The label column contains the correct classifications, ranging from 0 to 9, for the handwritten digits in the images. The split column indicates whether the data should be used for training (0) or testing (2) the model.
 

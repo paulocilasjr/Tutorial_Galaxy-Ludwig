@@ -178,7 +178,7 @@ Understanding the confusion matrix allows to calculate and interpreting: Recall,
 
 The starting point is the confusion matrix generated after training and testing the model (Figure 6). As usual, the diagonal elements represent the correctly predicted samples, giving you a sense of how well your model predicted all possible labels before conducting a more in-depth analysis.
 
-**View** {% icon galaxy-eye} The confusion matrix plot:
+The confusion matrix plot:
 [!confusion matrix generated from the image classifier results](../../images/galaxy-ludwig/confusion_matrix.png "confusion matrix")
 Figure 6 – Confusion matrix derivate from Image classifier model testing.
 

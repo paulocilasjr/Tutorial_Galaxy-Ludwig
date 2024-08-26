@@ -298,31 +298,173 @@ Based on the training curve (blue line) and the validation curve (orange line), 
 - CONVERGENCE:
     Overall, the graph would depict a rapid increase in performance early on, followed by a plateau as the model approaches optimal performance. This indicates successful training with effective generalization.
 
-***TODO***: *Consider adding a question to test the learners understanding of the previous exercise*
+# CHANGING MODEL'S CONFIGURATION (Epoch = 15)
 
-> <question-title></question-title>
+When designing a neural network, it is unfortunately not possible to determine the optimal number of neurons, layers, or other hyperparameters solely from a problem description. There is limited guidance available for selecting appropriate initial values, making it challenging to identify a starting point.
+
+A widely adopted approach involves making an initial estimate based on prior experience with networks designed for similar problems. This experience could be derived from your own work or gathered from secondary sources, such as training courses, blogs, or research papers. From there, it is advisable to experiment with different configurations and carefully evaluate the performance of each before selecting the most effective architecture.
+
+Since we have gathered insights from our recent model, we can now begin testing new configurations and comparing them to the previous results.
+
+## Changing Epochs
+
+For this new configuration, the file has been modified to adjust the Epoch value, increasing it from 5 to 15. Upload the file using the following link:
+
+```
+    https://zenodo.org/records/13376974/files/config_test_2.yaml
+```
+If you are comfortable using the same history to run and obtain the results, that is fine. Click on the "Upload Data" button in the navigation bar on the left side, then select "Paste/Fetch Data" to paste the link.
+
+Alternatively, you can create a new history to keep your experiment organized. Follow the steps below to start the new history.
+
+> <tip-title>create new history and upload files</tip-title> 
+>## Prepare environment and get the data 
+
+>> <hands-on-title> Environment and Data Upload </hands-on-title>
+>>
+>> 1. Create a new history for this tutorial. If you are not inspired, you can name it *climate101*.
+>>
+>>    {% snippet faqs/galaxy/histories_create_new.md %}
+>>
+>> 2. Import the files from Zenodo or from the shared data library
+>>
+>>    ```
+>>    https://zenodo.org/records/13292895/files/mnist_images.zip
+>>    https://zenodo.org/records/13292929/files/mnist_dataset.csv 
+>>    https://zenodo.org/records/13376974/files/config_test_2.yaml
+>>    ```
+>>
+>>    {% snippet faqs/galaxy/datasets_import_via_link.md %}
+>>
+>> 3. Check that the data format assigned for each file is **zip**, **csv**, and **yaml**, respectively.
+>>    If it is not, follow the Changing the datatype tip.
+>>
+>>    {% snippet faqs/galaxy/datasets_change_datatype.md datatype="datatypes" %}
+>>
+>> 5. Add a tag (`Stacked CNN`) to the dataset corresponding to `config.yaml`
+>>    This is important to trace back on what configurations the model was built on.
+>>
+>>    {% snippet faqs/galaxy/datasets_add_tag.md %}
+>>
+>{: .hands_on}
 >
-> 1. Question1?
-> 2. Question2?
+{: .tip}
+
+Run the experiment once again. If you need a refresher on how to set up the Ludwig experiment to run the tool, follow the instructions below.
+
+><tip-title>Ludwig Experiment</tip-title>
+>## Ludwig Experiment
+>><hands-on-title> Task description </hands-on-title>
+>>
+>> 1. {% tool [Ludwig Experiment](ludwig_experiment) %} with the following parameters:
+>>    - {% icon param-file %} *"Select the dataset containing model configuration"*: `config.yaml`
+>>    - {% icon param-file %} *"Input dataset"*: `mnist_dataset.csv`
+>>    - {% icon param-file %} *"Raw data"*: `mnist_images.zip`
+>>
+>>    > <comment-title> short description </comment-title>
+>>    >
+>>    > Once all the inputs are in place, press the 'RUN TOOL' button to start your job.
+>>    {: .comment}
+>>
+>{: .hands_on}
 >
-> > <solution-title></solution-title>
-> >
-> > 1. Answer for question1
-> > 2. Answer for question2
-> >
-> {: .solution}
+{: .tip}
+
+## LUDWIG EXPERIMENT REPORT
+
+Here are the results from the new model we have trained and validated. Using your knwoledge from the previous analysis, answers the following questions:
+
+> <comment-title>Confusion Matrix</comment-title>
+>![alt](../../images/galaxy-ludwig/confusion_matrix_test2.png "Confusion Matrix - Epoch = 15")
+>> <question-title></question-title>
+>>
+>> 1. For which label(s) did the model increase the number of correct predictions?
+>>
+>> > <solution-title></solution-title>
+>> >
+>> > 1. The model improved prediction across all labels.
+> > >
+>> {: .solution}
+>>
+>{: .question}
 >
-{: .question}
+{:  .comment}
 
+> <comment-title>Entropy</comment-title>
+>![alt](../../images/galaxy-ludwig/confusion_matrix_entropy_test2.png "Entropy - Epoch = 15")
+>> <question-title></question-title>
+>>
+>> 1. For which label(s) did the model decrease the entropy? 
+>>
+>> 2. Why did the order of the labels change compared to the previous results?
+>>
+>> > <solution-title></solution-title>
+>> >
+>> > 1. The model decreased entropy across all labels. 
+> > >
+>>> 2. For some labels, the entropy drop was more pronounced, moving those labels toward the bottom of the list.
+>>
+>> {: .solution}
+>>
+>{: .question}
+>
+{:  .comment}
 
-## Re-arrange
+> <comment-title>Loss</comment-title>
+>![alt](../../images/galaxy-ludwig/combined_loss_test2.png "Combined Loss - Epoch = 15")
+>> <question-title></question-title>
+>>
+>> 1. Did the increase in Epochs have a significant impact on the model's loss?
+>>
+>> > <solution-title></solution-title>
+>> >
+>> > 1. The model's training loss curve showed improvement, reaching a loss below 0.05 by the end of the epochs. However, this improvement was not reflected in the validation curve. This indicates that the model, technically, is not predicting significantly better than before.
+>> > 
+> > >
+>> {: .solution}
+>>
+>{: .question}
+>
+{:  .comment}
 
-To create the template, each step of the workflow had its own subsection.
+> <comment-title>Accuracy</comment-title>
+>![alt](../../images/galaxy-ludwig/accuracy_test2.png "Accuracy - Epoch = 15")
+>> <question-title></question-title>
+>>
+>> 1. Did the increase in Epochs hava a significant impact on the model's accuracy 
+>>
+>> > <solution-title></solution-title>
+>> >
+>> > 1. In alignment with the data presented by the confusion matrix, the accuracy exhibited an improvement.
+> > >
+>> {: .solution}
+>>
+>{: .question}
+>
+{:  .comment}
 
-***TODO***: *Re-arrange the generated subsections into sections or other subsections.
-Consider merging some hands-on boxes to have a meaningful flow of the analyses*
+> <comment-title>Hits at K</comment-title>
+>![alt](../../images/galaxy-ludwig/hits_at_K_test2.png "Hits at K - Epoch = 15")
+>> <question-title></question-title>
+>>
+>> 1. Can we infer that, overall, the model is making more accurate label predictions based on the hits at k?
+>>
+>> > <solution-title></solution-title>
+>> >
+>> > 1. Yes, the curves for both training and validation have approached 1, indicating that the correct label is now present within the top-k predictions more frequently. 
+> > >
+>> {: .solution}
+>>
+>{: .question}
+>
+{:  .comment}
 
 # Conclusion
+In this tutorial, we demonstrated how to utilize the Galaxy-Ludwig tool to build an image recognition model using the MNIST dataset of handwritten digits. We followed a structured approach consisting of 
+- uploading necessary files, 
+- running the Ludwig experiment, and 
+- evaluating the model's performance. 
 
-Sum up the tutorial and the key takeaways here. We encourage adding an overview image of the
-pipeline used.
+Through the process, we have seen how Ludwig simplifies the complexities of machine learning workflows, making it accessible and efficient for users. Additionally, we explored ways to enhance model performance by adjusting configurations and analyzing detailed evaluation metrics. 
+
+By the end of this tutorial, you should have a solid understanding of how to deploy a handwritten digit classification model and interpret its results effectively.

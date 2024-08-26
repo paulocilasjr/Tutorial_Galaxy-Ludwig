@@ -11,15 +11,14 @@ questions:
 - What files do I need to run Ludwig? 
 - How do I build and evaluate the image classification model? 
 objectives:
-- Upload image files and Ludwig files to Galaxy. 
-- Execute a Ludwig experiment and evaluate the results. 
+- Execute a Ludwig experiment. 
+- Evaluate the image classfier model. 
 - Compare different configurations to improve model performance. 
 time_estimation: 40M
 key_points:
 - Use Galaxy-Ludwig Experiment to solve an image classification problem
 - Using CNN on MNIST dataset. 
 contributors:
-  autorship:
   - Paulo Cilas M Lyra-Jr 
   - Junhao Qiu
   - Jeremy Goecks
@@ -33,9 +32,7 @@ Using the MNIST image dataset of handwritten digits as input, we will build an i
 
 To accomplish this, three steps are needed: (i) upload Ludwig files and image files to Galaxy (ii) setting up and running the Ludwig experiment function on Galaxy, and (iii) evaluate the image classification model. As a bonus step, we'll also explore (iv) improving the model's classification performance (Figure 1).
 
-![schema of the whole process of training model and test.](../../images/model_schema.png "create and run image classifier model")
-Figure 1 - Overview of the steps process to obtain the handwritten classification model and testing it.
-
+![schema of the whole process of training model and test.](../../images/galaxy-ludwig/model_schema.png "Overview of the steps process to obtain the handwritten classification model and testing it.")
 <!-- You may want to cite some publications; this can be done by adding citations to the
 bibliography file (`tutorial.bib` file next to your `tutorial.md` file). These citations
 must be in bibtex format. If you have the DOI for the paper you wish to cite, you can
@@ -76,8 +73,7 @@ Since our model will learn directly from the PNG files containing the handwritte
 
 Notice that we are going to work with compressed file (.zip), Galaxy-Ludwig knows how to decompress the files and have them ready.
 
-![folder tree related to the hand-written digits picture](../../images/images_file.png "folder tree")
-Figure 2 - File tree containing the images files used to training and testing the model
+![folder tree related to the hand-written digits picture](../../images/galaxy-ludwig/images_file.png "File tree containing the images files used to training and testing the model")
 
 ## MNIST_dataset.csv
 
@@ -85,23 +81,20 @@ The MNIST dataset consists of images and their corresponding labels. For the pur
 
 Briefly, the image_path column provides the file paths to the images that will be fed into the deep learning algorithm. The label column contains the correct classifications, ranging from 0 to 9, for the handwritten digits in the images. The split column indicates whether the data should be used for training (0) or testing (2) the model.
 
-![Dataset.csv file format snapshot](../../images/dataset_format.png "dataset.csv file snapshot")
-Figure 3 - Dataset.csv file format snapshot. features in order: file_path, label, split.
-
+![Dataset.csv file format snapshot](../../images/galaxy-ludwig/dataset_format.png "Dataset.csv file format snapshot. features in order: file_path, label, split.")
+ 
 ## Config.yaml
-
 
 The config.yaml file is crucial as it defines the entire structure of your machine learning experiment. This configuration file tells Ludwig how to process your data, what model to use, how to train it, and what outputs to generate.
 
 The rational on how this file was construct for this dataset is the following:
 i) The model takes images as input and uses a stacked convolutional neural network (CNN) to extract features.
 ii) It consists of two convolutional layers followed by a fully connected layer, with dropout applied to both the second convolutional layer and the fully connected layer to reduce overfitting.
-iii) The model is trained to classify images into categories (e.g., recognizing digits), and it will train for 20 epochs.
+iii) The model is trained to classify images into categories (e.g., recognizing digits), and it will train for 5 epochs.
 
-![Config.yaml file snapshot](../../images/config.png "config file snapshot")
-Figure 4 - Config.yaml file snapshot.
+![Config.yaml file snapshot](../../images/galaxy-ludwig/config.png "Config.yaml file snapshot.")
 
-# GALAXY-LUDWIG 
+# GALAXY-LUDWIG TOOL 
 
 Ludwig simplifies the complexities of machine learning by automating essential steps such as data preprocessing, model architecture selection, hyperparameter tuning, and device management. This streamlined approach is particularly beneficial for Galaxy users who are more interested in addressing their scientific questions than in navigating the intricacies of machine learning workflows.
 
@@ -140,9 +133,9 @@ Ludwig simplifies the complexities of machine learning by automating essential s
 > <hands-on-title> Task description </hands-on-title>
 >
 > 1. {% tool [Ludwig Experiment](ludwig_experiment) %} with the following parameters:
->    - {% icon param-file %} *"Select the dataset containing model configuration"*: `output` (config.yaml)
->    - {% icon param-file %} *"Input dataset"*: `output` (mnist_dataset.csv)
->    - {% icon param-file %} *"Raw data"*: `output` (mnist_images.zip)
+>    - {% icon param-file %} *"Select the dataset containing model configuration"*: `config.yaml`
+>    - {% icon param-file %} *"Input dataset"*: `mnist_dataset.csv`
+>    - {% icon param-file %} *"Raw data"*: `mnist_images.zip`
 >
 >    > <comment-title> short description </comment-title>
 >    >
@@ -155,13 +148,15 @@ Ludwig simplifies the complexities of machine learning by automating essential s
 
 After your model is trained and tested, you should see three new files in your history list:
 
-### Ludwig Experiment Report: An HTML file containing the evaluation report of the trained model.
-### Ludwig Experiment Trained Model: A composite dataset of the trained Ludwig model.
-### Ludwig Experiment Predictions CSV: A CSV file with the prediction results from the model evaluations.
+    > Ludwig Experiment Report: An HTML file containing the evaluation report of the trained model.
+    
+    > Ludwig Experiment Trained Model: A composite dataset of the trained Ludwig model.
+    
+    > Ludwig Experiment Predictions CSV: A CSV file with the prediction results from the model evaluations.
 
 To evaluate the model, the Ludwig Experiment Report contains all the necessary information.
 
-# Ludwig Experiment Report
+# LUDWIG EXPERIMENT REPORT
 
 Before we begin, it's crucial to determine the most appropriate metric for a given machine learning problem. While accuracy is a useful metric, other performance measures might be more suitable depending on the specific goal. For instance, an overfitted model might exhibit high accuracy due to class imbalance in the dataset. Therefore, the purpose of building the model should guide the interpretation of various metrics.
 
@@ -171,21 +166,19 @@ In this section, we will demonstrate how to evaluate the results of an image cla
 
 A confusion matrix is powerful for evaluating the performance of a deep learning model, especially in classification tasks. It provides a granular view of model performance, helping to refine the model. It achieves that by showing the predicted labels with the actual labels in a structured table format, where rows are the actual values and columns the prediction from the model (Figure 5).
 
-[!figure illustrates the process of generating a confusion matrix from a machine learning model's predictions](../../images/galaxy-ludwig/ex_confusion_matrix.png "confusion matrix schema")
-Figure 5 - This figure illustrates the process of generating a confusion matrix from a machine learning model's predictions. The confusion matrix is a table used to evaluate the performance of a classification algorithm. It compares the actual labels (true values) with the predicted labels produced by the model.
+![figure illustrates the process of generating a confusion matrix from a machine learning model's predictions](../../images/galaxy-ludwig/ex_confusion_matrix.png "This figure illustrates the process of generating a confusion matrix from a machine learning model's predictions. The confusion matrix is a table used to evaluate the performance of a classification algorithm. It compares the actual labels (true values) with the predicted labels produced by the model.")
 
 Understanding the confusion matrix allows to calculate and interpreting: Recall, Precision, Specificity, Accuracy, and other aspects involved such as bias.
 
 The starting point is the confusion matrix generated after training and testing the model (Figure 6). As usual, the diagonal elements represent the correctly predicted samples, giving you a sense of how well your model predicted all possible labels before conducting a more in-depth analysis.
 
 The confusion matrix plot:
-[!confusion matrix generated from the image classifier results](../../images/galaxy-ludwig/confusion_matrix.png "confusion matrix")
-Figure 6 – Confusion matrix derivate from Image classifier model testing.
+
+![confusion matrix generated from the image classifier results](../../images/galaxy-ludwig/confusion_matrix.png "Confusion matrix derivate from Image classifier model testing.")
 
 For example, we can interpret the results for the handwritten digit '1' (Figure 7a) and for digit '7' (Figure 7b). Each analysis provides a snapshot of the model's performance for each tested digit.
 
-[!Analysis of the confusion matrix derived from image classifier model testing](../../images/galaxy-ludwig/1_confusion_matrix.png)
-Figure 7 – Analysis of the confusion matrix derived from image classifier model testing. A) Analysis of the digit '1' and its corresponding confusion matrix. B) Analysis of the digit '7' and its corresponding confusion matrix.
+![Analysis of the confusion matrix derived from image classifier model testing](../../images/galaxy-ludwig/1_confusion_matrix.png "Analysis of the confusion matrix derived from image classifier model testing. A) Analysis of the digit '1' and its corresponding confusion matrix. B) Analysis of the digit '7' and its corresponding confusion matrix.")
 
 Based on the analysis presented, we can conclude that (i) the model demonstrates a remarkable ability to identify the digits, (ii) with slightly better predictions for the digit '7' compared to the digit '1'. (iii) The model also shows a strong tendency to confuse the digit '1' with the digit '2'. It's important to note that the confusion matrix also provides insight into the model's bias; for example, if the numbers along the diagonal are low and the off-diagonal numbers are high, it may indicate bias.
 
@@ -193,9 +186,8 @@ Based on the analysis presented, we can conclude that (i) the model demonstrates
 
 In the context of a confusion matrix, entropy measures the uncertainty or disorder in the model's predictions (Figure 8). A confusion matrix with low entropy would have high values concentrated along the diagonal (indicating correct predictions) and low values elsewhere, suggesting that the model is confident and accurate in its classifications. Conversely, a high entropy confusion matrix would have more evenly distributed values, indicating more frequent misclassifications and greater uncertainty in the model's predictions. In simple terms, entropy helps quantify how mixed or "confused" the model is when making decisions, with higher entropy reflecting more confusion.
 
-**View** {% icon galaxy-eye} The confusion matrix plot:
-[!Confusion matrix entropy from image classifier results](../../images/galaxy-ludwig/confusion_matrix_entropy.png)
-Figure 8 – Confusion matrix entropy of the model trained. The figure visualizes how the model's performance varies across different digits based on the distribution of prediction probabilities.
+The confusion matrix plot:
+![Confusion matrix entropy from image classifier results](../../images/galaxy-ludwig/confusion_matrix_entropy.png "Confusion matrix entropy of the model trained. The figure visualizes how the model's performance varies across different digits based on the distribution of prediction probabilities.")
 
 The lowest entropy value, observed for digit '6' (0.0344), indicates that the model is highly confident and accurate in predicting this digit, with fewer misclassifications and greater certainty. Conversely, the highest entropy value, seen for digit '9' (0.1519), suggests that the model experiences more uncertainty and confusion when predicting this digit, leading to more frequent misclassifications. Additionally, the entropy for digit '7' is lower than that for digit '1', confirming our earlier observation that the model classifies digit '7' more effectively. This variability in entropy can guide further improvements in model training and tuning, with the goal of reducing uncertainty and enhancing prediction accuracy across all digits.
 
@@ -205,68 +197,64 @@ The F1 score is a metric used to evaluate the performance of a classification mo
 
 > <tip-title>Precision definition</tip-title>
 > Precision: Precision measures the accuracy of positive predictions. It is the ratio of correctly predicted positive observations to the total predicted positives. In other words, it answers the question, "Of all the instances the model predicted as positive, how many were actually positive?
->[!precision formula](../../images/galaxy-ludwig/sensitivity_formula.png)
+>![precision formula](../../images/galaxy-ludwig/sensitivity_formula.png)
 >
 {: .tip}
 
 > <tip-title>Recall definition</tip-title>
 > Recall, also known as sensitivity or true positive rate, measures how well the model identifies all the actual true cases. It is the ratio of correctly predicted positive observations to all observations in the actual class. It answers the question, "Of all the actual true, how many did the model correctly identify? 
->[!recall formula](../../images/galaxy-ludwig/recall_formula.png)
+>![recall formula](../../images/galaxy-ludwig/recall_formula.png)
 >
 {: .tip}
 
 
 > <tip-title>F1 score definition</tip-title>
 > The F1 score is the harmonic mean of precision and recall. Unlike the simple average, the harmonic mean gives more weight to lower values, so the F1 score will be high only if both precision and recall are high.
->[!f1 score formula](../../images/galaxy-ludwig/f1_score_formula.png)
+>![f1 score formula](../../images/galaxy-ludwig/f1_score_formula.png)
 >
 {: .tip}
 
 The F1 score vs. frequency label graph (Figure 8) is a valuable tool for diagnosing how well a model handles different classes, especially in datasets where some classes are much more common than others. By analyzing this graph, you can identify areas where your model might need more attention, ensuring balanced and accurate predictions across all classes.
 
 
-[!F1 score vs frequency label](../../images/galaxy-ludwig/f1_score.png)
-Figure 9 – F1 Score vs. Frequency of Labels. This graph illustrates the relationship between the frequency of each class label in the dataset and the model's F1 score for that class. Higher F1 scores indicate better model performance.
-
+![F1 score vs frequency label](../../images/galaxy-ludwig/f1_score.png "F1 Score vs. Frequency of Labels. This graph illustrates the relationship between the frequency of each class label in the dataset and the model's F1 score for that class. Higher F1 scores indicate better model performance.")
 
 Digits like '1' (7850 occurrences, F1 score = 0.992) and '0' (6900 occurrences, F1 score = 0.9928) demonstrate very high F1 scores. This suggests that the model has learned to accurately identify these digits, despite of the difference when looking the frequency of the digits. Digit '5', with a lower frequency of 6,350, still achieves a strong F1 score of 0.9888. Although its frequency is the lowest among the digits, the F1 score remains high, indicating that the model maintains a good balance of precision and recall even with fewer examples. This reflects the robustness of the CNN model.
 While there is a slight trend where higher frequency digits tend to have slightly higher F1 scores, the differences are minimal. For example, digit '9' has a lower frequency (6950) and a slightly lower F1 score (0.9845), but this drop is not substantial. This suggests that the CNN model is robust enough to handle slight variations in training data frequency without significant drops in performance.
-
 
 ## Combined Loss
 
 The Loss vs. Epoch graph represents the learning progress during the training of a neural network. The x-axis shows the epochs, where one epoch means that each sample in the training dataset has had an opportunity to update the model’s internal parameters. The y-axis represents the loss, a numerical metric indicating how incorrect the model's predictions are. The objective of training is to minimize this loss, aiming to reduce it to the lowest possible value.
 
-> <tip-title>loss of function function</tip-title>
+> <tip-title>Loss Function details</tip-title>
 >In image classification tasks, cross-entropy loss, also known as log loss, is the most frequently used loss function. For binary classification (two classes), binary cross-entropy is used, while sparse categorical cross-entropy is applied when classifying three or more categories. The model produces a probability vector indicating the likelihood that the input image belongs to each predefined category. This predicted vector is then compared to the actual output, which is represented by a vector of the same size, where the correct category is assigned a probability of 1, and all other categories are assigned a probability of 0.
+>
 {: .tip}
 
 In the graph (Figure 9), there are two curves: one for training and one for validation. When training a model, you'll often look at a loss curve to determine if the model has converged. It could also help in detecting overfitting and underfitting and can provide insights for implementing early stopping.
 
 > <tip-title>Overfitting</tip-title>
 >Overfitting occurs when the network fails to generalize well to unseen data because it begins to model the noise and randomness in the training dataset.
->[!alt](../../images/galaxy-ludwig/overfitting.png)
-
->Underfitting happens when the patterns in the training dataset are too complex for our model. It can’t capture them, so it has a poor performance on training and validation sets. 
->[!alt](../../images/galaxy-ludwig/underfitting.png)
-
->We don't use plots to implement early stopping directly. Instead, we specify a minimum improvement that must be achieved over several consecutive epochs for training to continue. Similarly, we can define a maximum acceptable difference between the training and validation loss curves and stop training if this gap falls below that threshold. However, visualizing the loss versus epochs helps us understand why the training algorithm triggered an early stop.
+>![alt](../../images/galaxy-ludwig/overfitting.png "Overfitting curve")
+>
 {: .tip}
 
-[!loss vs epochs](../../images/galaxy-ludwig/learning_cuves_combined_loss.png)
-Figure 10 – Loss versus Epochs during training and validation. The graph illustrates the relationship between the training loss and the number of epochs during the training of the model.
+> <tip-title>Underfitting</tip-title>
+>Underfitting happens when the patterns in the training dataset are too complex for our model. It can’t capture them, so it has a poor performance on training and validation sets. 
+>![alt](../../images/galaxy-ludwig/underfitting.png "Underfitting curve")
+>
+{: .tip}
 
+![loss vs epochs](../../images/galaxy-ludwig/learning_curves_combined_loss.png "Loss versus Epochs during training and validation. The graph illustrates the relationship between the training loss and the number of epochs during the training of the model.")
 
 Based on the training curve (blue line) and the validation curve (orange line), we can draw the following conclusions:
 
-### Consistent Improvement
-Both training and validation losses consistently decrease over the five epochs. This indicates that the model is effectively learning and improving its performance on both the training and validation datasets.
-### Approaching Convergence
-By Epoch 5, the training loss has reduced to 0.06, and the validation loss to 0.040. The gradual reduction in losses suggests that the model is approaching convergence, where further training may yield diminishing returns in terms of performance improvement.
-### Low Risk of Overfitting/Underfitting
-The gap between the training and validation losses remains small throughout the training process, with validation loss consistently lower than training loss. This suggests that the model is not overfitting/underfitting and is likely generalizing well to unseen data.
-### Low potential for further training
-Although the losses are decreasing, they are doing so at a slowing rate. While the model appears to be converging, further training might still provide minor improvements, though early stopping could be considered soon to prevent unnecessary computation.
+- CONSISTENT IMPROVEMENT:
+    Both training and validation losses consistently decrease over the five epochs. This indicates that the model is effectively learning and improving its performance on both the training and validation datasets.
+- APPROACHING CONVERGENCE:
+    By Epoch 5, the training loss has reduced to 0.06, and the validation loss to 0.040. The gradual reduction in losses suggests that the model is approaching convergence, where further training may yield diminishing returns in terms of performance improvement.
+- LOW RISK OF OVERFITTING/UNDERFITTING:
+    The gap between the training and validation losses remains small throughout the training process, with validation loss consistently lower than training loss. This suggests that the model is not overfitting/underfitting and is likely generalizing well to unseen data.
 
 ## Accuracy
 
@@ -277,40 +265,37 @@ As training progresses, the accuracy on the training data usually increases, ind
 > Plotting accuracy and plotting loss are both essential for monitoring the performance of a deep learning model, but they serve different purposes and provide different insights. While accuracy provides a straightforward measure of model performance, loss offers deeper insights into the training process, making both plots valuable for different aspects of model evaluation.
 {: .tip}
 
-[!alt](../../images/galaxy-ludwig/learning_curves_label_accuracy.png)
-Figure 11 – Accuracy versus Epochs. This graph depicts the accuracy of the model over the course of training and validation. The training accuracy curve indicates how well the model is performing on the training data, while the validation accuracy curve shows performance on unseen validation data.
+![alt](../../images/galaxy-ludwig/learning_curves_label_accuracy.png "Accuracy versus Epochs. This graph depicts the accuracy of the model over the course of training and validation. The training accuracy curve indicates how well the model is performing on the training data, while the validation accuracy curve shows performance on unseen validation data.")
 
 Based on the training curve (blue line) and the validation curve (orange line), we can draw the following conclusions:
 
-### Dataset is relatively easy for the model to learn
-The model starts with a relatively high training accuracy of >0.8 and a very high validation accuracy of >0.96 from the first epoch.
-### Consistent improvement
-Both training and validation accuracies increase steadily across the epochs. This consistent upward trend indicates that the model is learning effectively and becoming more accurate in its predictions with each epoch.
-### Low risk of overfitting/underfitting
-The validation accuracy is consistently higher than the training accuracy, which is somewhat unusual but can occur in cases where the validation set is easier or the model benefits from regularization techniques. The small gap between training and validation accuracies suggests that the model generalizes well to unseen data, with no significant signs of overfitting/underfitting.
-### Low potential for further training
-By the fifth epoch, both the training and validation accuracies are close to 1.0, indicating that the model is approaching its maximum performance. The small increments in accuracy between epochs 4 and 5 suggest that the model is nearing convergence, where additional training may yield minimal improvements.
+- DATASET IS RELATIVELY EASY FOR THE MODEL TO LEARN:
+    The model starts with a relatively high training accuracy of >0.8 and a very high validation accuracy of >0.96 from the first epoch.
+- CONSISTENT IMPROVEMENT:
+    Both training and validation accuracies increase steadily across the epochs. This consistent upward trend indicates that the model is learning effectively and becoming more accurate in its predictions with each epoch.
+- LOW RISK OF OVERFFITING/UNDERFITTING:
+    The validation accuracy is consistently higher than the training accuracy, which is somewhat unusual but can occur in cases where the validation set is easier or the model benefits from regularization techniques. The small gap between training and validation accuracies suggests that the model generalizes well to unseen data, with no significant signs of overfitting/underfitting.
+- APPROACHING CONVERGENCE:
+    By the fifth epoch, both the training and validation accuracies are close to 1.0, indicating that the model is approaching its maximum performance. The small increments in accuracy between epochs 4 and 5 suggest that the model is nearing convergence, where additional training may yield minimal improvements.
 
 ## Hits at K
 
 This metric measures the proportion of times the correct item is found within the top-k predictions made by the model. X-axis (Epochs) represents the number of training cycles (epochs) completed. Y-axis (Hits at k) represents the hit rate, or the frequency with which the correct item appears in the top k predictions.
 
-> <tip-title>Hits at K trendss</tip-title>
+> <tip-title>Hits at K trend</tip-title>
 > Upward Trend: An upward trend in the graph indicates that the model is improving, as it becomes more likely to rank the correct item within the top k predictions as training progresses. Plateauing: If the graph plateaus, it suggests that the model's performance has stabilized and further training may not yield significant improvements. Fluctuations: Fluctuations in the graph could indicate overfitting, underfitting, or instability in the model's training process.
 {: .tip}
 
-[!alt](../../images/galaxy-ludwig/learning_curves_label_hits_at_k.png)
-Figure 12 - Hits at K metric across different epochs. The Hits at K metric evaluates the proportion of times the correct item is found within the top K predictions made by the model.
+![alt](../../images/galaxy-ludwig/learning_curves_label_hits_at_k.png "Hits at K metric across different epochs. The Hits at K metric evaluates the proportion of times the correct item is found within the top K predictions made by the model.")
 
 Based on the training curve (blue line) and the validation curve (orange line), we can draw the following conclusions:
 
-
-### Good model performance
-The model shows consistent improvement over the epochs, with both training and validation Hits at k approaching near-perfect levels. The model starts with a strong performance on both training and validation sets. However, the validation performance is significantly higher than training, suggesting that the model is generalizing well from the beginning but may still need some tuning for better training performance.
-### Generalization
-The small difference between training and validation performance throughout indicates that the model generalizes well to unseen data.
-### Convergence
-Overall, the graph would depict a rapid increase in performance early on, followed by a plateau as the model approaches optimal performance. This indicates successful training with effective generalization.
+- GOOD MODEL PERFORMANCE:
+    The model shows consistent improvement over the epochs, with both training and validation Hits at k approaching near-perfect levels. The model starts with a strong performance on both training and validation sets. However, the validation performance is significantly higher than training, suggesting that the model is generalizing well from the beginning but may still need some tuning for better training performance.
+- GENERALIZATION:
+    The small difference between training and validation performance throughout indicates that the model generalizes well to unseen data.
+- CONVERGENCE:
+    Overall, the graph would depict a rapid increase in performance early on, followed by a plateau as the model approaches optimal performance. This indicates successful training with effective generalization.
 
 ***TODO***: *Consider adding a question to test the learners understanding of the previous exercise*
 

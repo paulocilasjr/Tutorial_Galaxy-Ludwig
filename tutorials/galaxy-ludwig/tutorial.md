@@ -318,8 +318,7 @@ If you are comfortable using the same history to run and obtain the results, tha
 Alternatively, you can create a new history to keep your experiment organized. Follow the steps below to start the new history.
 
 > <tip-title>create new history and upload files</tip-title> 
->## Prepare environment and get the data 
-
+>
 >> <hands-on-title> Environment and Data Upload </hands-on-title>
 >>
 >> 1. Create a new history for this tutorial. If you are not inspired, you can name it *climate101*.
@@ -353,7 +352,7 @@ Alternatively, you can create a new history to keep your experiment organized. F
 Run the experiment once again. If you need a refresher on how to set up the Ludwig experiment to run the tool, follow the instructions below.
 
 ><tip-title>Ludwig Experiment</tip-title>
->## Ludwig Experiment
+>
 >><hands-on-title> Task description </hands-on-title>
 >>
 >> 1. {% tool [Ludwig Experiment](ludwig_experiment) %} with the following parameters:
@@ -375,6 +374,7 @@ Run the experiment once again. If you need a refresher on how to set up the Ludw
 Here are the results from the new model we have trained and validated. Using your knwoledge from the previous analysis, answers the following questions:
 
 > <comment-title>Confusion Matrix</comment-title>
+>
 >![alt](../../images/galaxy-ludwig/confusion_matrix_test2.png "Confusion Matrix - Epoch = 15")
 >> <question-title></question-title>
 >>
@@ -391,6 +391,7 @@ Here are the results from the new model we have trained and validated. Using you
 {:  .comment}
 
 > <comment-title>Entropy</comment-title>
+>
 >![alt](../../images/galaxy-ludwig/confusion_matrix_entropy_test2.png "Entropy - Epoch = 15")
 >> <question-title></question-title>
 >>
@@ -411,6 +412,7 @@ Here are the results from the new model we have trained and validated. Using you
 {:  .comment}
 
 > <comment-title>Loss</comment-title>
+>
 >![alt](../../images/galaxy-ludwig/combined_loss_test2.png "Combined Loss - Epoch = 15")
 >> <question-title></question-title>
 >>
@@ -428,6 +430,7 @@ Here are the results from the new model we have trained and validated. Using you
 {:  .comment}
 
 > <comment-title>Accuracy</comment-title>
+>
 >![alt](../../images/galaxy-ludwig/accuracy_test2.png "Accuracy - Epoch = 15")
 >> <question-title></question-title>
 >>
@@ -444,6 +447,7 @@ Here are the results from the new model we have trained and validated. Using you
 {:  .comment}
 
 > <comment-title>Hits at K</comment-title>
+>
 >![alt](../../images/galaxy-ludwig/hits_at_K_test2.png "Hits at K - Epoch = 15")
 >> <question-title></question-title>
 >>

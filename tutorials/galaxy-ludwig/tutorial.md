@@ -102,7 +102,7 @@ Ludwig simplifies the complexities of machine learning by automating essential s
 
 > <hands-on-title> Environment and Data Upload </hands-on-title>
 >
-> 1. Create a new history for this tutorial. If you are not inspired, you can name it *climate101*.
+> 1. Create a new history for this tutorial. If you are not inspired, you can name it *image classifier*.
 >
 >    {% snippet faqs/galaxy/histories_create_new.md %}
 >
@@ -448,7 +448,7 @@ Here are the results from the new model we have trained and validated. Using you
 
 > <comment-title>Hits at K</comment-title>
 >
->![alt](../../images/galaxy-ludwig/hits_at_K_test2.png "Hits at K - Epoch = 15")
+>![alt](../../images/galaxy-ludwig/hits_at_k_test2.png "Hits at K - Epoch = 15")
 >> <question-title></question-title>
 >>
 >> 1. Can we infer that, overall, the model is making more accurate label predictions based on the hits at k?

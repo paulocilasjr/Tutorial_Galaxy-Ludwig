@@ -28,9 +28,9 @@ tags:
 - Ludwig
 ---
 
-Using the MNIST image dataset of handwritten digits as input, we will build an image recognition model with the Galaxy-Ludwig tool. The goal is to classify the digit handwritten in each image.
+Using the MNIST image dataset of handwritten digits as input, we will build an image recognition model with the Galaxy-Ludwig tool. The goal is to classify the handwritten digit in each image.
 
-To accomplish this, three steps are needed: (i) upload Ludwig files and image files to Galaxy (ii) setting up and running the Ludwig experiment function on Galaxy, and (iii) evaluate the image classification model. As a bonus step, we'll also explore (iv) improving the model's classification performance (Figure 1).
+To accomplish this, three steps are needed: (i) upload Ludwig files and image files to Galaxy (ii) Set up and running the Ludwig experiment function on Galaxy, and (iii) Evaluate the image classification model. As a bonus step, we'll also explore (iv) improving the model's classification performance (Figure 1).
 
 ![schema of the whole process of training model and test.](../../images/galaxy-ludwig/model_schema.png "Overview of the steps process to obtain the handwritten classification model and testing it.")
 <!-- You may want to cite some publications; this can be done by adding citations to the
@@ -61,7 +61,7 @@ tutorial.-->
 > the database has a training set of 60,000 examples, and a test set of 10,000 examples.
 > at our planet and its environment for the ultimate benefit of all European citizens.
 > It is a subset of a larger set available from NIST.
-> The digist have been size-normalized and centered in a fixed-size image.
+> The digits have been size normalized and centered in a fixed-size image.
 {:  .comment}
 
 # FILES FORMAT
@@ -87,7 +87,7 @@ Briefly, the image_path column provides the file paths to the images that will b
 
 The config.yaml file is crucial as it defines the entire structure of your machine learning experiment. This configuration file tells Ludwig how to process your data, what model to use, how to train it, and what outputs to generate.
 
-The rational on how this file was construct for this dataset is the following:
+The rationale on how this file was constructed for this dataset is the following:
 i) The model takes images as input and uses a stacked convolutional neural network (CNN) to extract features.
 ii) It consists of two convolutional layers followed by a fully connected layer, with dropout applied to both the second convolutional layer and the fully connected layer to reduce overfitting.
 iii) The model is trained to classify images into categories (e.g., recognizing digits), and it will train for 5 epochs.
@@ -211,7 +211,7 @@ The F1 score is a metric used to evaluate the performance of a classification mo
 
 > <tip-title>F1 score definition</tip-title>
 > The F1 score is the harmonic mean of precision and recall. Unlike the simple average, the harmonic mean gives more weight to lower values, so the F1 score will be high only if both precision and recall are high.
->![f1 score formula](../../images/galaxy-ludwig/f1_score_formula.png)
+>![F1 score formula](../../images/galaxy-ludwig/f1_score_formula.png)
 >
 {: .tip}
 
@@ -270,11 +270,11 @@ As training progresses, the accuracy on the training data usually increases, ind
 
 Based on the training curve (blue line) and the validation curve (orange line), we can draw the following conclusions:
 
-- DATASET IS RELATIVELY EASY FOR THE MODEL TO LEARN:
+- THE DATASET IS RELATIVELY EASY FOR THE MODEL TO LEARN:
     The model starts with a relatively high training accuracy of >0.8 and a very high validation accuracy of >0.96 from the first epoch.
 - CONSISTENT IMPROVEMENT:
     Both training and validation accuracies increase steadily across the epochs. This consistent upward trend indicates that the model is learning effectively and becoming more accurate in its predictions with each epoch.
-- LOW RISK OF OVERFFITING/UNDERFITTING:
+- LOW RISK OF OVERFITING/UNDERFITTING:
     The validation accuracy is consistently higher than the training accuracy, which is somewhat unusual but can occur in cases where the validation set is easier or the model benefits from regularization techniques. The small gap between training and validation accuracies suggests that the model generalizes well to unseen data, with no significant signs of overfitting/underfitting.
 - APPROACHING CONVERGENCE:
     By the fifth epoch, both the training and validation accuracies are close to 1.0, indicating that the model is approaching its maximum performance. The small increments in accuracy between epochs 4 and 5 suggest that the model is nearing convergence, where additional training may yield minimal improvements.

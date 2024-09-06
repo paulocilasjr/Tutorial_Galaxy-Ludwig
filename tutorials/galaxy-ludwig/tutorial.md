@@ -202,7 +202,7 @@ The Loss vs. Epoch graph represents the learning progress during the training of
 >
 {: .tip}
 
-In the graph (Figure 9), there are two curves: one for training and one for validation. When training a model, you'll often look at a loss curve to determine if the model has converged. It could also help in detecting overfitting and underfitting and can provide insights for implementing early stopping.
+In the graph (Figure 9), there is a training curve. When training a model, you'll often look at a loss curve to determine if the model has converged. It could also help in detecting overfitting and underfitting and can provide insights for implementing early stopping.
 
 > <tip-title>Overfitting</tip-title>
 >Overfitting occurs when the network fails to generalize well to unseen data because it begins to model the noise and randomness in the training dataset.
@@ -216,7 +216,7 @@ In the graph (Figure 9), there are two curves: one for training and one for vali
 >
 {: .tip}
 
-![loss vs epochs](../../images/galaxy-ludwig/test1_combined_loss.png "Loss versus Epochs during training and validation. The graph illustrates the relationship between the training loss and the number of epochs during the training of the model.")
+![loss vs epochs](../../images/galaxy-ludwig/test1_combined_loss.png "Loss versus Epochs during training. The graph illustrates the relationship between the training loss and the number of epochs during the training of the model.")
 
 Based on the training curve (blue line), we can draw the following conclusions:
 
@@ -234,7 +234,7 @@ As training progresses, the accuracy on the training data usually increases, ind
 > Plotting accuracy and plotting loss are both essential for monitoring the performance of a deep learning model, but they serve different purposes and provide different insights. While accuracy provides a straightforward measure of model performance, loss offers deeper insights into the training process, making both plots valuable for different aspects of model evaluation.
 {: .tip}
 
-![alt](../../images/galaxy-ludwig/test1_label_accuracy.png "Accuracy versus Epochs. This graph depicts the accuracy of the model over the course of training and validation. The training accuracy curve indicates how well the model is performing on the training data, while the validation accuracy curve shows performance on unseen validation data.")
+![alt](../../images/galaxy-ludwig/test1_label_accuracy.png "Accuracy versus Epochs. This graph depicts the accuracy of the model over the course of training. The training accuracy curve indicates how well the model is performing on the training data.")
 
 Based on the training curve (blue line), we can draw the following conclusions:
 
@@ -366,8 +366,8 @@ Here are the results from the new model we have trained and validated. Using you
 >>> 1. The model decreased entropy across all labels. 
 >>>
 >>> 2. For some labels, the entropy drop was more pronounced, moving those labels toward the bottom of the list.
->>
->> {: .solution}
+>>>
+>>{: .solution}
 >>
 >{: .question}
 >
@@ -383,7 +383,6 @@ Here are the results from the new model we have trained and validated. Using you
 >>> <solution-title></solution-title>
 >>>
 >>> 1. The model's training loss curve showed improvement, reaching a loss below 0.25 by the end of the epochs. 
->>> 
 >>>
 >>{: .solution}
 >>
